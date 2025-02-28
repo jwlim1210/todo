@@ -1,0 +1,5 @@
+### To-Do 조회
+
+GET http://localhost:18080/api/todo/list HTTP/1.1
+content-type: application/json
+
