@@ -15,8 +15,8 @@ public class TodoListService {
         this._todoListMapper = todoListMapper;
     }
 
-    public List<TodoListParameter> getTodoList() {
-        return _todoListMapper.getTodoList();
+    public List<TodoListParameter> getTodoList(String due_date) {
+        return _todoListMapper.getTodoList(due_date);
     }
 
 

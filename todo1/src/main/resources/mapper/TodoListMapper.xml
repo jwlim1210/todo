@@ -3,13 +3,16 @@
 
 <mapper namespace="com.fdx.todo.mapper.TodoListMapper">
     <select id="getTodoList" resultType="com.fdx.todo.common.vo.TodoListParameter">
-        SELECT id
-               ,user_id
-               ,title
-               ,description
-               ,status
-               ,due_date
-               ,created_at
-        FROM tasks;
+        SELECT id,
+               user_id,
+               title,
+               description,
+               status,
+               due_date,
+               created_at
+        FROM tasks
+        <where>
+                AND due_date = #{due_date}
+        </where>
     </select>
 </mapper>

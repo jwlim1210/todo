@@ -1,6 +1,7 @@
 package com.fdx.todo.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fdx.todo.common.services.TodoListService;
@@ -25,8 +26,9 @@ public class TodoListApiController {
     }
 
     @GetMapping("/list")
-    public List<TodoListParameter> getMethodName() {
-        var result = _todoListService.getTodoList();
+    public List<TodoListParameter> getMethodName(@RequestParam String due_date) {
+        System.out.println(due_date);
+        var result = _todoListService.getTodoList(due_date);
         return result;
     }
     

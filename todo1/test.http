@@ -3,6 +3,10 @@
 GET http://localhost:18080/api/todo/list HTTP/1.1
 content-type: application/json
 
+{
+    "due_date" : "2025-03-01"
+}
+
 
 
 ### To-Do 조회

@@ -8,5 +8,5 @@ import com.fdx.todo.common.vo.TodoListParameter;
 
 @Mapper
 public interface TodoListMapper {
-    List<TodoListParameter> getTodoList();
+    List<TodoListParameter> getTodoList(String due_date);
 }
