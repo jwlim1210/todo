@@ -12,7 +12,9 @@
                created_at
         FROM tasks
         <where>
+            <if test="due_date != null and due_date != ''">
                 AND due_date = #{due_date}
+            </if>
         </where>
     </select>
 </mapper>

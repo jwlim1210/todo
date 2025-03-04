@@ -17,7 +17,49 @@ code {
   background: #1890ff;
   color: white;
   text-align: center;
-  font-size: 24px;
-  font-family: 'Roboto', sans-serif; /* 원하는 폰트 적용 */
-  padding: 15px;
+  font-size: 22px;
+  font-family: 'Roboto', sans-serif;
+  padding: 15px 20px;
+  min-height: 60px;
+  line-height: 1.2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
+
+.custom-sidebar {
+  background: #f0f2f5;
+  padding: 10px;
+  position: absolute;
+  height: 100vh;
+  transition: left 0.3s ease-in-out; /* 부드러운 애니메이션 */
+}
+
+/* 오른쪽 사이드바에 대한 스타일 */
+.custom-sidebar-right {
+  background: #f0f2f5;
+  padding: 10px;
+  position: absolute;
+  top: 0; /* 헤더 바로 아래에 위치하도록 수정 */
+  right: 0;
+  width: 300px; /* 원하는 사이드바 너비 설정 */
+  height: 100vh; /* 화면 전체 높이 */
+  transition: "all 0.3s ease"; /* 애니메이션 효과 */
+  z-Index: 100;
+}
+
+
+
+.custom-content {
+  flex: 1; /* 남은 공간을 차지하도록 설정 */
+  min-height: 80vh; /* 콘텐츠 높이를 줄임 */
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  margin-left: 200px; /* 사이드바가 있을 때 기본적으로 200px로 설정 */
+  transition: all 0.3s ease; /* 애니메이션 효과 */
+
+}
+
