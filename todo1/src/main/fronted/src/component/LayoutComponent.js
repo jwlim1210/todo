@@ -1,4 +1,3 @@
-// LayoutComponent.js
 import React from "react";
 import { Layout, Button } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
@@ -10,6 +9,12 @@ const { Header, Footer, Sider, Content } = Layout;
 function LayoutComponent({ children }) {
   const [collapsed, setCollapsed] = useState(false);
 
+  // collapsed 상태 변화 확인을 위한 콘솔 로그 추가
+  const toggleCollapse = () => {
+    setCollapsed(!collapsed);
+    console.log("collapsed after:", !collapsed); // 상태 변경 후 출력
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header className="custom-header">
@@ -20,7 +25,7 @@ function LayoutComponent({ children }) {
 
       <Button
         type="primary"
-        onClick={() => setCollapsed(!collapsed)}
+        onClick={toggleCollapse} // 클릭 시 toggleCollapse 호출
         style={{
           position: "absolute",
           top: 15,
@@ -47,7 +52,6 @@ function LayoutComponent({ children }) {
           </nav>
         </Sider>
 
-        {/* 콘텐츠 영역 */}
         <Content
           className="custom-content"
           style={{
@@ -56,7 +60,7 @@ function LayoutComponent({ children }) {
           }}
         >
           <div style={{transition: "all 0.3s ease-in-out" }}>
-            {React.cloneElement(children, { collapsed })} {/* collapsed 상태를 children으로 전달 */}
+            {children}
           </div>
         </Content>
 
@@ -64,7 +68,7 @@ function LayoutComponent({ children }) {
       </Layout>
 
       <Footer style={{ textAlign: "center", padding: "10px", background: "#001529", color: "white" }}>
-        Footer ©2025 Created by You
+        FDXNETWORKS ©2025 Created by LimJungWoo
       </Footer>
     </Layout>
   );

@@ -1,29 +1,30 @@
 import React from 'react';
-import { Calendar } from 'antd';
+import { Calendar, Button } from 'antd';
+import { CaretLeftFilled , CaretRightFilled } from '@ant-design/icons';
 
-const CalendarView = ({ todoList, handleDateSelect }) => {
+const CalendarView = ({ todoList, handleDateSelect, handleTodayClick, handleResetClick, calendarValue }) => {
     const cellRender = (value) => {
         const date = value.format('YYYY-MM-DD');
-        const todosForDate = todoList.filter(todo => todo.due_date === date); // 해당 날짜의 todo 필터링
+        const todosForDate = todoList.filter(todo => todo.due_date === date);
         if (todosForDate.length === 0) {
             return null;
         }
 
-        // 각 상태별 할 일 개수 구하기
         const waitingCount = todosForDate.filter(todo => todo.status === '대기').length;
         const inProgressCount = todosForDate.filter(todo => todo.status === '진행중').length;
         const completedCount = todosForDate.filter(todo => todo.status === '완료').length;
+
         return (
             <div style={{ textAlign: 'right', fontSize: "12px" }}>
-                    <strong>Status</strong>
-                <div style={{ backgroundColor: '#fce5cd',  marginBottom: '2px', borderRadius: '5px' }}>
-                <strong> 대기 : {waitingCount}개 </strong>
+                <strong>Status</strong>
+                <div style={{ backgroundColor: '#fce5cd', marginBottom: '2px', borderRadius: '5px' }}>
+                    <strong> 대기 : {waitingCount}개 </strong>
                 </div>
-                <div style={{ backgroundColor: '#d9ead3',  marginBottom: '2px',borderRadius: '5px' }}>
-                <strong>진행중 : {inProgressCount}개</strong>
+                <div style={{ backgroundColor: '#d9ead3', marginBottom: '2px', borderRadius: '5px' }}>
+                    <strong>진행중 : {inProgressCount}개</strong>
                 </div>
                 <div style={{ backgroundColor: '#c9daf8', marginBottom: '2px', borderRadius: '5px' }}>
-                <strong>완료 : {completedCount}개</strong>
+                    <strong>완료 : {completedCount}개</strong>
                 </div>
             </div>
         );
@@ -31,43 +32,57 @@ const CalendarView = ({ todoList, handleDateSelect }) => {
 
     return (
         <Calendar
+            value={calendarValue} // 선택된 날짜 설정
             style={{
                 background: "white",
                 borderRadius: "10px",
-                padding: "10px",
-                height: "750px", // 캘린더 높이 설정
+                height: "750px",
             }}
             onSelect={handleDateSelect}
             cellRender={cellRender}
             headerRender={({ value, onChange }) => {
                 return (
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        {/* 이전 달 버튼 */}
-                        <button
-                            onClick={() => onChange(value.subtract(1, "month"))}
-                            style={{ marginRight: 10, border: "none", background: "none", cursor: "pointer" }}
-                        >
-                            ◀
-                        </button>
+                    <div style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        width: "100%",
+                        padding: "10px"
+                    }}>
+                        <div>
+                            <Button
+                                type="text"
+                                icon={<CaretLeftFilled />}
+                                onClick={() => onChange(value.subtract(1, "month"))}
+                                style={{ fontSize: "25px", marginRight: 5 }}
+                            />
 
-                        {/* 월 표시 */}
-                        <span style={{ fontSize: "16px", fontWeight: "bold" }}>
-                            {value.format("MMMM")} {/* 'January', 'February' 등 월만 표시 */}
-                        </span>
+                            <span style={{ fontSize: "25px", fontWeight: "bold" }}>
+                                {value.format("MMMM")}
+                            </span>
 
-                        {/* 다음 달 버튼 */}
-                        <button
-                            onClick={() => onChange(value.add(1, "month"))}
-                            style={{ marginLeft: 10, border: "none", background: "none", cursor: "pointer" }}
-                        >
-                            ▶
-                        </button>
+                            <Button
+                                type="text"
+                                icon={<CaretRightFilled />}
+                                onClick={() => onChange(value.add(1, "month"))}
+                                style={{ fontSize: "25px", marginLeft: 5 }}
+                                
+                            />
+                        </div>
+                        
+                        <div>
+                            <Button type="primary" onClick={handleTodayClick} style={{ marginRight: "8px" }}>
+                                Today
+                            </Button>
+                            <Button type="default" onClick={handleResetClick}>
+                                Reset
+                            </Button>
+                        </div>
                     </div>
                 );
             }}
         />
-
     );
-
 };
+
 export default CalendarView;

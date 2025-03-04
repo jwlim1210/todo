@@ -9,10 +9,10 @@ function App() {
       {/* LayoutComponent로 기본 레이아웃을 감싸고 Routes로 페이지 이동 */}
       <LayoutComponent>
         <Routes>
-          {/* Calendar 페이지 */}
-          <Route path="/calendar" element={<Calendar />} />
           {/* Todo 페이지 */}
           <Route path="/todo" element={<Todo />} />
+          {/* Calendar 페이지 */}
+          <Route path="/calendar" element={<Calendar />} />
         </Routes>
       </LayoutComponent>
     </Router>

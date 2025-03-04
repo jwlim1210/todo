@@ -12,6 +12,7 @@ public class TodoListParameter {
     private String title;
     private String description;
     private String status;
+    private String due_month;
     private String due_date;
     private String created_at;
 

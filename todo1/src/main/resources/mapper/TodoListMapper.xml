@@ -2,19 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.fdx.todo.mapper.TodoListMapper">
+    <!-- 조회 -->
     <select id="getTodoList" resultType="com.fdx.todo.common.vo.TodoListParameter">
         SELECT id,
                user_id,
                title,
                description,
                status,
+               due_month,
                due_date,
                created_at
         FROM tasks
         <where>
-            <if test="due_date != null and due_date != ''">
-                AND due_date = #{due_date}
+            <if test="due_month != null and due_month != ''">
+                AND due_month = #{due_month}
             </if>
         </where>
     </select>
+
+    <!-- 날짜 기준 전체 삭제 -->
+    <delete id="deleteAllDay" parameterType="com.fdx.todo.common.vo.TodoListParameter">
+        DELETE FROM tasks
+        <where>
+                AND due_date = #{due_date}
+        </where>
+    </delete>
+
+
 </mapper>

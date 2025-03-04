@@ -1,6 +1,6 @@
 ### To-Do 조회
 
-GET http://localhost:18080/api/todo/list HTTP/1.1
+GET http://localhost:18080/api/todo/list?due_month= HTTP/1.1
 content-type: application/json
 
 {
@@ -8,7 +8,8 @@ content-type: application/json
 
 
 
-### To-Do 조회
 
-GET http://localhost:3000/api/todo/list HTTP/1.1
-content-type: application/json
+### To-Do 조회
+### DELETE 요청: 특정 날짜의 할 일 삭제
+DELETE http://localhost:18080/api/todo/date/del?due_date=2025-03-05 HTTP/1.1
+Content-Type: application/json
