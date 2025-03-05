@@ -29,7 +29,8 @@ function LayoutComponent({ children }) {
             position: "absolute",
             top: 15,
             fontSize: "20px", // 아이콘 크기 조정
-            right: 200, // 버튼을 오른쪽에 배치하기 위해 left에서 right로 수정
+            right: collapsed ? 40 : 200, // 사이드바가 펼쳐지면 버튼 위치 조정
+            transition: "right 0.3s", // 애니메이션 효과 추가 (사이드바 펼칠 때 버튼 이동)
           }}
         >
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -60,7 +61,7 @@ function LayoutComponent({ children }) {
         <Sider width={collapsed ? 0 : 200} className="layout-sidebar-right"></Sider>
       </Layout>
 
-      <Footer style={{ textAlign: "center", padding: "10px", background: "#001529", color: "white" }}>
+      <Footer className="layout-footer">
         FDXNETWORKS ©2025 Created by LimJungWoo
       </Footer>
     </Layout>

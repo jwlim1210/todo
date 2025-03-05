@@ -32,7 +32,7 @@ const CalendarView = ({ todoList, handleDateSelect, handleTodayClick, calendarVa
 
     return (
         <Calendar
-            value={calendarValue} // 선택된 날짜 설정
+            value={calendarValue} 
             style={{
                 background: "white",
                 borderRadius: "10px",
@@ -47,7 +47,6 @@ const CalendarView = ({ todoList, handleDateSelect, handleTodayClick, calendarVa
                         justifyContent: "space-between",
                         alignItems: "center",
                         width: "100%",
-                        transition: "all 0.3s ease", // 헤더 부분도 자연스럽게 전환
                         padding: "10px"
                     }}>
                         <div>

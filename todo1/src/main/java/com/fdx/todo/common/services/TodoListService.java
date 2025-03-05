@@ -1,8 +1,6 @@
 package com.fdx.todo.common.services;
 
 import java.util.List;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -12,6 +10,7 @@ import com.fdx.todo.common.vo.TodoListParameter;
 import com.fdx.todo.mapper.TodoListMapper;
 
 @Service
+@Transactional
 public class TodoListService {
     private final TodoListMapper _todoListMapper;
 
@@ -21,9 +20,10 @@ public class TodoListService {
     }
 
     public List<TodoListParameter> getTodoList(String parameter) {
-        if (parameter != "") {
+        if (parameter != null && !parameter.isEmpty()) {  
             parameter = parameter.substring(0, 7);
         }
+        System.out.println(parameter);
         return _todoListMapper.getTodoList(parameter);
     }
 
@@ -46,8 +46,9 @@ public class TodoListService {
     }
 
     // 매일 자정에 실행되는 메서드
-    @Scheduled(cron = "*/10 * * * * *") 
-    @Transactional
+    // @Scheduled(cron = "*/10 * * * * *")  // 테스트용 10초마다
+
+    @Scheduled(cron = "0 */10 * * * *")
     public void updateStatusToInProgress() {
         int updatedCount = _todoListMapper.updateStatusToInProgress();
         System.out.println("오늘 날짜가 지난 할 일의 상태가 변경된 갯수: " + updatedCount);

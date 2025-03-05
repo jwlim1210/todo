@@ -25,7 +25,7 @@ const TodoList = ({ todos, addTodo, selectedDate, delTodo, updateTodo }) => {
         console.error("할 일 추가 중 오류 발생:", error);
       }
     } else {
-      // 선택된 할 일이 있다면 수정
+    // 선택된 할 일이 있다면 수정
       try {
         await axios.put('http://localhost:18080/api/todo/update', {
           id: selectedTodo.id,
@@ -33,7 +33,7 @@ const TodoList = ({ todos, addTodo, selectedDate, delTodo, updateTodo }) => {
         });
         updateTodo(newTodo);
         setNewTodo("");
-
+        setSelectedTodo(null);
       } catch (error) {
         console.error("할 일 수정 중 오류 발생:", error);
       }
@@ -46,6 +46,7 @@ const TodoList = ({ todos, addTodo, selectedDate, delTodo, updateTodo }) => {
       await axios.delete(`/api/todo/date/del?parameter=${id}`);
       delTodo(id); // 삭제 후 부모 컴포넌트에서도 반영
       setNewTodo("");
+      setSelectedTodo(null);
     } catch (error) {
       console.error("데이터 없음", error);
     }
@@ -118,9 +119,9 @@ const TodoList = ({ todos, addTodo, selectedDate, delTodo, updateTodo }) => {
                     color: item.status === 2 ? '#999' : '#000',
                     flex: 1,
                     overflow: 'hidden',
-                    textOverflow: 'ellipsis', // 길어진 제목은 생략
-                    whiteSpace: 'nowrap', // 제목이 길어져도 한 줄로 표시
-                    paddingRight: '10px' // 제목과 상태 사이에 공간 추가
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    paddingRight: '10px' 
                   }}
                 >
                   {item.title}
@@ -128,7 +129,7 @@ const TodoList = ({ todos, addTodo, selectedDate, delTodo, updateTodo }) => {
 
                 {/* 상태 사각형 박스 */}
                 <div
-                  className={`status-box ${getStatusClass(item.status)}`}  // 조건부 클래스를 추가
+                  className={`status-box ${getStatusClass(item.status)}`} 
                   style={{
                     padding: '5px 12px',
                     borderRadius: '12px',

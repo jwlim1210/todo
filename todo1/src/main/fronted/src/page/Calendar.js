@@ -70,7 +70,7 @@ function Calendar() {
             className="calendar-container"
         >
             {/* 캘린터 */}
-            <div style={{ flex: 1, padding: "10px" }}>
+            <div style={{ flex: 1, padding: "10px", marginRight : "20px"}}>
                 <CalendarView
                     todoList={todoList}
                     handleDateSelect={handleDateSelect}
@@ -86,7 +86,7 @@ function Calendar() {
             }}></div>
 
             {/* To-Do List */}
-            <div style={{ flex: 1, padding: "20px", display: "flex", flexDirection: "column" ,overflowY: "auto"}}>
+            <div style={{ flex: 1, marginLeft : "10px", padding: "20px", display: "flex", flexDirection: "column" ,overflowY: "auto"}}>
                 <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
                     <span style={{ fontSize: "25px", fontWeight: "bold" }}>
                         To-Do List
