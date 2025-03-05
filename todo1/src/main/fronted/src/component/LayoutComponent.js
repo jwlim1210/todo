@@ -9,10 +9,8 @@ const { Header, Footer, Sider, Content } = Layout;
 function LayoutComponent({ children }) {
   const [collapsed, setCollapsed] = useState(false);
 
-  // collapsed 상태 변화 확인을 위한 콘솔 로그 추가
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
-    console.log("collapsed after:", !collapsed); // 상태 변경 후 출력
   };
 
   return (
@@ -23,14 +21,14 @@ function LayoutComponent({ children }) {
         </div>
 
         <Button
-          onClick={toggleCollapse} // 클릭 시 toggleCollapse 호출
+          onClick={toggleCollapse} 
           style={{
             background: "#f0f2f5",
             position: "absolute",
             top: 15,
-            fontSize: "20px", // 아이콘 크기 조정
-            right: collapsed ? 40 : 200, // 사이드바가 펼쳐지면 버튼 위치 조정
-            transition: "right 0.3s", // 애니메이션 효과 추가 (사이드바 펼칠 때 버튼 이동)
+            fontSize: "20px", 
+            right: collapsed ? 40 : 200, 
+            transition: "right 0.3s", 
           }}
         >
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}

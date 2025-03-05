@@ -46,9 +46,9 @@ public class TodoListService {
     }
 
     // 매일 자정에 실행되는 메서드
-    // @Scheduled(cron = "*/10 * * * * *")  // 테스트용 10초마다
-
-    @Scheduled(cron = "0 */10 * * * *")
+   
+    @Scheduled(cron = "*/10 * * * * *")  // 테스트용 10초마다
+    // @Scheduled(cron = "0 */10 * * * *")
     public void updateStatusToInProgress() {
         int updatedCount = _todoListMapper.updateStatusToInProgress();
         System.out.println("오늘 날짜가 지난 할 일의 상태가 변경된 갯수: " + updatedCount);

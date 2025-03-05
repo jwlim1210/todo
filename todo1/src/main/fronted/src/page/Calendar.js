@@ -1,76 +1,96 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import TodoList from '../component/TodoList';
+import React, { useState, useEffect } from 'react';
+import dayjs from 'dayjs';
 import CalendarView from '../component/CalendarView';
-import dayjs from "dayjs";
+import TodoView from '../component/TodoView';
+import { Input, Button } from 'antd';
+import { fetchTodos, addTodo, updateTodo, deleteTodo } from '../component/api';
 
 function Calendar() {
     const [todoList, setTodoList] = useState([]); // 전체 todoList 상태
     const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD')); // 기본 날짜 오늘로 설정
     const [calendarValue, setCalendarValue] = useState(dayjs()); // 캘린더에서 선택된 날짜
-    const today = dayjs().format('YYYY-MM-DD');
+    const [newTodo, setNewTodo] = useState("");  // 새로운 할 일 입력 상태
+    const [selectedTodo, setSelectedTodo] = useState(null); // 선택된 할 일 상태
 
-    // Todo 리스트 가져오기 (월별 조회)
-    const fetchTodos = async (selectedDate) => {
+    useEffect(() => {
+        getTodos(selectedDate);
+    }, [selectedDate]);
+
+    const getTodos = async (selectedDate) => {
         try {
-            const response = await axios.get(`/api/todo/list?parameter=${selectedDate}`);
-            setTodoList(response.data);
+            const todos = await fetchTodos(selectedDate);
+            setTodoList(todos);
         } catch (error) {
             console.error("할 일 목록을 가져오는 중 오류 발생:", error);
         }
     };
 
-
-
-    // 새로운 할 일을 추가하는 함수 (TodoList에서 호출)
-    const addTodo = (newTodo) => {
-        setTodoList([...todoList, { title: newTodo, due_date: selectedDate }]);
-        fetchTodos(selectedDate);
+    // 추가
+    const addNewTodo = async () => {
+        if (newTodo === "") { alert("할 일을 입력 해주세요!"); return; }
+        try {
+            await addTodo(newTodo, selectedDate);
+            setNewTodo(""); 
+            await getTodos(selectedDate); 
+        } catch (error) {
+            console.error("할 일 추가 중 오류 발생:", error);
+        }
     };
 
-    const delTodo = (id) => {
-        setTodoList(todoList.filter(todo => todo.id !== id)); // 해당 ID를 가진 todo 삭제
-        fetchTodos(selectedDate); // 최신 데이터 불러오기
+    // 삭제
+    const removeTodo = async () => {
+        if (!selectedTodo) {
+            alert("삭제할 할 일을 선택해주세요!");
+            return;
+        }
+        try {
+            await deleteTodo(selectedTodo.id);
+            await getTodos(selectedDate); // 할 일 삭제 후 재호출
+            setSelectedTodo(null); // 삭제 후 선택된 할 일 초기화
+            setNewTodo(""); // 삭제 후 인풋 박스 초기화
+        } catch (error) {
+            console.error("할 일 삭제 중 오류 발생:", error);
+        }
     };
 
-    const updateTodo = (id) => {
-        setTodoList([...todoList, { id: selectedDate.id, due_date: selectedDate}]);
-        fetchTodos(selectedDate); // 최신 데이터 불러오기
+    //수정
+    const modifyTodo = async () => {
+        if (!selectedTodo || newTodo === "") {
+            alert("수정할 할 일을 입력해주세요!");
+            return;
+        }
+        try {
+            await updateTodo(selectedTodo.id, newTodo);
+            setSelectedTodo(null);
+            setNewTodo(""); 
+            await getTodos(selectedDate);
+        } catch (error) {
+            console.error("할 일 수정 중 오류 발생:", error);
+        }
     };
 
-    // 처음 마운트될 때 현재 월 데이터를 불러오기
-    useEffect(() => {
-        fetchTodos(selectedDate);
-    }, [selectedDate]);
-
-
-    // 날짜 선택 시 API 호출 및 상태 업데이트
+    // 조회
     const handleDateSelect = async (value) => {
         const selectedDate = value.format('YYYY-MM-DD');
         setSelectedDate(selectedDate);
         setCalendarValue(value);
-        fetchTodos(selectedDate); // 선택된 월 기준으로 API 호출
+        getTodos(selectedDate); 
     };
 
-
-    // Today 버튼 클릭 시 오늘 날짜로 설정 + API 호출
+    // 캘린더 날짜 클릭
     const handleTodayClick = () => {
         const todayDate = dayjs();
         handleDateSelect(todayDate);
     };
 
-
-
     const filteredTodos = selectedDate
         ? todoList.filter(todo => todo.due_date === selectedDate)
-        : todoList; // 선택된 날짜가 없으면 전체 리스트
+        : todoList;
 
     return (
-        <div
-            className="calendar-container"
-        >
-            {/* 캘린터 */}
-            <div style={{ flex: 1, padding: "10px", marginRight : "20px"}}>
+        <div className="calendar-container" style={{ display: "flex", padding: "20px" }}>
+            {/* 캘린더 */}
+            <div style={{ flex: 1, padding: "10px", marginRight: "20px" }}>
                 <CalendarView
                     todoList={todoList}
                     handleDateSelect={handleDateSelect}
@@ -78,30 +98,57 @@ function Calendar() {
                     calendarValue={calendarValue}
                 />
             </div>
+            {/* 경계선 */}
+            <div style={{ borderLeft: "1px solid #ccc", height: "100%" }}></div>
 
-            {/* 중앙 경계선 */}
-            <div style={{
-                borderLeft: "1px solid #ccc",
-                height: "100%",
-            }}></div>
-
-            {/* To-Do List */}
-            <div style={{ flex: 1, marginLeft : "10px", padding: "20px", display: "flex", flexDirection: "column" ,overflowY: "auto"}}>
+            {/* todo */}
+            <div style={{ flex: 1, marginLeft: "10px", padding: "20px", display: "flex", flexDirection: "column", overflowY: "auto" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
                     <span style={{ fontSize: "25px", fontWeight: "bold" }}>
                         To-Do List
                     </span>
                     <span style={{ marginTop: "10px" }}>
-                        Selectd : {selectedDate}
+                        Selected : {selectedDate}
                     </span>
                 </div>
-                <TodoList 
-                todos={filteredTodos} 
-                addTodo={addTodo} 
-                delTodo = {delTodo}
-                updateTodo = {updateTodo}
-                selectedDate={selectedDate} 
+
+                {/* 할 일 목록 보여주기 */}
+                <TodoView
+                    todos={filteredTodos}
+                    selectedTodo={selectedTodo}
+                    setSelectedTodo={setSelectedTodo} // 선택된 할 일을 설정하는 함수 전달
+                    addTodo={addNewTodo}
+                    delTodo={removeTodo}
+                    updateTodo={modifyTodo}
+                    selectedDate={selectedDate}
+                    setNewTodo={setNewTodo} // 새로운 할 일 텍스트를 업데이트할 함수 전달
+                    newTodo={newTodo} // 새로운 할 일 텍스트 상태 전달
                 />
+
+                {/* 할 일 추가 입력 필드와 버튼 */}
+                <div style={{ marginTop: "10px", display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        <Input
+                            placeholder="새로운 할 일을 입력하세요"
+                            value={newTodo}
+                            onChange={(e) => setNewTodo(e.target.value)}
+                            onPressEnter={selectedTodo ? modifyTodo : addNewTodo} // 수정 상태에 따라 처리 함수 달리 설정
+                            style={{ flex: 1 }}
+                        />
+                        <Button
+                            type="primary"
+                            onClick={selectedTodo ? modifyTodo : addNewTodo} // 수정 상태에 따라 처리 함수 달리 설정
+                        >
+                            {selectedTodo ? "수정" : "추가"} {/* 버튼 텍스트 변경 */}
+                        </Button>
+                        <Button
+                            type="primary" danger
+                            onClick={removeTodo}  // 삭제 시 removeTodo 함수 사용
+                        >
+                            삭제
+                        </Button>
+                    </div>
+                </div>
             </div>
         </div>
     );
