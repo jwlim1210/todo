@@ -5,9 +5,7 @@
     <!-- 조회 -->
     <select id="getTodoList" resultType="com.fdx.todo.common.vo.TodoListParameter">
         SELECT id,
-               user_id,
                title,
-               description,
                status,
                due_month,
                due_date,
@@ -21,12 +19,49 @@
     </select>
 
     <!-- 날짜 기준 전체 삭제 -->
-    <delete id="deleteAllDay" parameterType="com.fdx.todo.common.vo.TodoListParameter">
+    <delete id="deleteAllDay" parameterType="com.fdx.todo.common.vo.TodoListSearchParameter">
         DELETE FROM tasks
         <where>
-                AND due_date = #{due_date}
+                AND id = #{id}
         </where>
     </delete>
+
+    <insert id="insertTodo" parameterType="com.fdx.todo.common.vo.TodoListParameter">
+    INSERT INTO tasks (
+                title, 
+                status, 
+                due_month, 
+                due_date, 
+                created_at
+                )
+            VALUES (
+                #{title}, 
+                #{status},
+                #{due_month},
+                #{due_date}, 
+                NOW()
+            )
+    </insert>
+
+
+	<update id="updateTodo" parameterType="com.fdx.todo.common.vo.TodoListParameter" >
+        UPDATE tasks
+        <set>
+				title = #{title}
+        </set>
+         WHERE 1=1
+         AND id = #{id}
+    </update>
+
+<!-- 스케줄러 -->
+
+    <!-- 상태 업데이트 쿼리 -->
+    <update id="updateStatusToInProgress">
+        UPDATE tasks
+        SET status = 1
+        WHERE status = 0
+        AND STR_TO_DATE(due_date, '%Y-%m-%d') &lt; CURDATE() 
+    </update>
 
 
 </mapper>

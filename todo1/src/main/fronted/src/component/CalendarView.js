@@ -2,7 +2,7 @@ import React from 'react';
 import { Calendar, Button } from 'antd';
 import { CaretLeftFilled , CaretRightFilled } from '@ant-design/icons';
 
-const CalendarView = ({ todoList, handleDateSelect, handleTodayClick, handleResetClick, calendarValue }) => {
+const CalendarView = ({ todoList, handleDateSelect, handleTodayClick, calendarValue }) => {
     const cellRender = (value) => {
         const date = value.format('YYYY-MM-DD');
         const todosForDate = todoList.filter(todo => todo.due_date === date);
@@ -10,9 +10,9 @@ const CalendarView = ({ todoList, handleDateSelect, handleTodayClick, handleRese
             return null;
         }
 
-        const waitingCount = todosForDate.filter(todo => todo.status === '대기').length;
-        const inProgressCount = todosForDate.filter(todo => todo.status === '진행중').length;
-        const completedCount = todosForDate.filter(todo => todo.status === '완료').length;
+        const waitingCount = todosForDate.filter(todo => todo.status === 0).length;
+        const inProgressCount = todosForDate.filter(todo => todo.status === 1).length;
+        const completedCount = todosForDate.filter(todo => todo.status === 2).length;
 
         return (
             <div style={{ textAlign: 'right', fontSize: "12px" }}>
@@ -47,6 +47,7 @@ const CalendarView = ({ todoList, handleDateSelect, handleTodayClick, handleRese
                         justifyContent: "space-between",
                         alignItems: "center",
                         width: "100%",
+                        transition: "all 0.3s ease", // 헤더 부분도 자연스럽게 전환
                         padding: "10px"
                     }}>
                         <div>
@@ -73,9 +74,6 @@ const CalendarView = ({ todoList, handleDateSelect, handleTodayClick, handleRese
                         <div>
                             <Button type="primary" onClick={handleTodayClick} style={{ marginRight: "8px" }}>
                                 Today
-                            </Button>
-                            <Button type="default" onClick={handleResetClick}>
-                                Reset
                             </Button>
                         </div>
                     </div>

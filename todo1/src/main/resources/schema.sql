@@ -2,12 +2,9 @@ USE todo;
 
 CREATE TABLE tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
-    description TEXT,
-    status ENUM('대기', '진행중', '완료') DEFAULT '대기',
-    due_month VARCHAR(7) NOT NULL,  -- 추가된 월 컬럼
+    status INT DEFAULT 0,  -- 상태를 0, 1, 2로 처리
+    due_month VARCHAR(255) NOT NULL,  -- 추가된 월 컬럼
     due_date VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-

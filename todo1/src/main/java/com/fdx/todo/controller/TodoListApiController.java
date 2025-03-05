@@ -9,11 +9,14 @@ import com.fdx.todo.common.vo.TodoListParameter;
 
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+
+
 
 
 @RestController
@@ -28,15 +31,26 @@ public class TodoListApiController {
     }
 
     @GetMapping("/list")
-    public List<TodoListParameter> getMethodName(@RequestParam String due_month) {
-        var result = _todoListService.getTodoList(due_month);
+    public List<TodoListParameter> getTodoList(@RequestParam String parameter) {
+        var result = _todoListService.getTodoList(parameter);
         return result;
     }
 
 
+
+    @PostMapping("/add")
+    public void insertTodo(@RequestBody TodoListParameter parameter) {
+        _todoListService.insertTodo(parameter);
+    }
+
+   @PutMapping("/update")
+    public void updateTodo(@RequestBody TodoListParameter parameter) {
+        _todoListService.updateTodo(parameter);
+    }
+
     @DeleteMapping("/date/del")
-    public void deleteAllDay(@RequestParam String due_date) {
-        _todoListService.deleteAllDay(due_date);
+    public void deleteAllDay(@RequestParam String parameter) {
+        _todoListService.deleteAllDay(parameter);
     }
 
 }

@@ -17,35 +17,28 @@ function LayoutComponent({ children }) {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Header className="custom-header">
+      <Header className="layout-header">
         <div style={{ textAlign: "center" }}>
           <h2>FDXNETWORKS</h2>
         </div>
-      </Header>
 
-      <Button
-        type="primary"
-        onClick={toggleCollapse} // 클릭 시 toggleCollapse 호출
-        style={{
-          position: "absolute",
-          top: 15,
-          left: 15,
-          zIndex: 100,
-        }}
-      >
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </Button>
-
-      <Layout style={{ position: "relative" }}>
-        <Sider
-          width={collapsed ? 0 : 200}
-          className="custom-sidebar"
+        <Button
+          onClick={toggleCollapse} // 클릭 시 toggleCollapse 호출
           style={{
-            transition: "all 0.3s ease",
+            background: "#f0f2f5",
             position: "absolute",
-            zIndex: 100,
+            top: 15,
+            fontSize: "20px", // 아이콘 크기 조정
+            right: 200, // 버튼을 오른쪽에 배치하기 위해 left에서 right로 수정
           }}
         >
+          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        </Button>
+      </Header>
+
+
+      <Layout style={{ position: "relative" }}>
+        <Sider width={collapsed ? 0 : 200} className="layout-sidebar-left">
           <nav>
             <Link to="/todo"><h3>📝 오늘 일정</h3></Link>
             <Link to="/calendar"><h3 style={{ marginTop: "20px" }}> 📅 전체 일정</h3></Link>
@@ -53,18 +46,18 @@ function LayoutComponent({ children }) {
         </Sider>
 
         <Content
-          className="custom-content"
+          className="layout-content"
           style={{
             marginLeft: collapsed ? "0px" : "200px",
             marginRight: collapsed ? "0px" : "200px",
           }}
         >
-          <div style={{transition: "all 0.3s ease-in-out" }}>
+          <div>
             {children}
           </div>
         </Content>
 
-        <Sider width={collapsed ? 0 : 200} className="custom-sidebar-right"></Sider>
+        <Sider width={collapsed ? 0 : 200} className="layout-sidebar-right"></Sider>
       </Layout>
 
       <Footer style={{ textAlign: "center", padding: "10px", background: "#001529", color: "white" }}>

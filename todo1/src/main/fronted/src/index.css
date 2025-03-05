@@ -12,12 +12,12 @@ code {
     monospace;
 }
 
-
-.custom-header {
-  background: #1890ff;
-  color: white;
+/* 레이아웃 헤더 */
+.layout-header {
+  background: #f0f2f5;
+  color: black;
   text-align: center;
-  font-size: 22px;
+  font-size: 20px;
   font-family: 'Roboto', sans-serif;
   padding: 15px 20px;
   min-height: 60px;
@@ -29,37 +29,88 @@ code {
   white-space: nowrap;
 }
 
-.custom-sidebar {
+/* 레이아웃 왼쪽 사이드바 */
+.layout-sidebar-left {
   background: #f0f2f5;
   padding: 10px;
   position: absolute;
   height: 100vh;
-  transition: left 0.3s ease-in-out; /* 부드러운 애니메이션 */
+  transition: left 0.3s ease-in-out; 
 }
 
-/* 오른쪽 사이드바에 대한 스타일 */
-.custom-sidebar-right {
+/* 레이아웃 오른쪽 사이드바 */
+.layout-sidebar-right {
   background: #f0f2f5;
   padding: 10px;
   position: absolute;
-  top: 0; /* 헤더 바로 아래에 위치하도록 수정 */
+  top: 0; 
   right: 0;
-  width: 300px; /* 원하는 사이드바 너비 설정 */
-  height: 100vh; /* 화면 전체 높이 */
-  transition: "all 0.3s ease"; /* 애니메이션 효과 */
+  width: 300px; 
+  height: 100vh; 
+  transition: "all 0.3s ease"; 
   z-Index: 100;
 }
 
 
-
-.custom-content {
-  flex: 1; /* 남은 공간을 차지하도록 설정 */
-  min-height: 80vh; /* 콘텐츠 높이를 줄임 */
+/* 레이아웃 콘텐츠  */
+.layout-content {
+  flex: 1; 
+  min-height: 80vh; 
   padding: 20px;
   background: white;
   border-radius: 10px;
-  margin-left: 200px; /* 사이드바가 있을 때 기본적으로 200px로 설정 */
-  transition: all 0.3s ease; /* 애니메이션 효과 */
+  margin-left: 200px; 
+  transition: all 0.3s ease;
 
 }
 
+/* To-Do List 상태별 스타일 */
+.status-box {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.status-waiting {
+  background-color: #f0ad4e;
+}
+
+.status-in-progress {
+  background-color: #28a745;
+}
+
+.status-completed {
+  background-color: #5bc0de;
+}
+
+.status-default {
+  background-color: #ccc;
+}
+
+
+/* 캘린더 */
+.calendar-container {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+/* todo-container의 크기 고정 */
+.todo-container {
+  margin-top: 20px;
+  width: 100%;
+  height: 700px; /* 높이 고정 */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}

@@ -8,6 +8,18 @@ import com.fdx.todo.common.vo.TodoListParameter;
 
 @Mapper
 public interface TodoListMapper {
-    List<TodoListParameter> getTodoList(String due_month);
-    void deleteAllDay(String due_date);
+    // 캘린더 조회
+    List<TodoListParameter> getTodoList(String parameter);
+
+
+    // 전체 삭제
+    void deleteAllDay(String parameter);
+
+    // 캘린더 값 추가
+    void insertTodo(TodoListParameter parameter);
+    
+    // 업데이트
+    void updateTodo(TodoListParameter parameter);
+
+    int updateStatusToInProgress();
 }

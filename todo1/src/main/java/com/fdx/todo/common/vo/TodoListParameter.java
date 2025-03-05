@@ -8,12 +8,13 @@ import lombok.Setter;
 @Getter @Setter
 public class TodoListParameter {
     private int id;
-    private String user_id;
     private String title;
-    private String description;
-    private String status;
+    private int status;
     private String due_month;
     private String due_date;
     private String created_at;
 
+    
+
 }
+
