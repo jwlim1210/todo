@@ -39,8 +39,8 @@ function LayoutComponent({ children }) {
       <Layout style={{ position: "relative" }}>
         <Sider width={collapsed ? 0 : 200} className="layout-sidebar-left">
           <nav>
-            <Link to="/todo"><h3>📝 오늘 일정</h3></Link>
-            <Link to="/calendar"><h3 style={{ marginTop: "20px" }}> 📅 전체 일정</h3></Link>
+            <Link to="/calendar"><h3>📅 Calendar </h3></Link>
+            <Link to="/todo"><h3 style={{ marginTop: "20px" }}> 📝 History </h3></Link>
           </nav>
         </Sider>
 

@@ -48,9 +48,20 @@ public class TodoListApiController {
         _todoListService.updateTodo(parameter);
     }
 
+    @PutMapping("/update/status")
+    public void updateStatusTodo(@RequestBody TodoListParameter parameter) {
+        _todoListService.updateStatusTodo(parameter);
+    }
+
     @DeleteMapping("/date/del")
     public void deleteAllDay(@RequestParam String parameter) {
         _todoListService.deleteAllDay(parameter);
+    }
+
+    @GetMapping("/scheduled")
+    public String triggerScheduledTask() {
+        _todoListService.updateStatus();
+        return "스케줄 작업이 트리거되었습니다!";
     }
 
 }

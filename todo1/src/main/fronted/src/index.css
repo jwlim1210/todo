@@ -56,9 +56,7 @@ code {
   padding: 20px;
   background: white;
   border-radius: 10px;
-  margin-left: 200px; 
   transition: all 0.3s ease;
-
 }
 
 /* 레이아웃 하단 바 */
@@ -81,19 +79,6 @@ code {
   text-align: center;
   text-transform: capitalize;
 }
-
-.status-waiting {
-  background-color: #f0ad4e;
-}
-
-.status-in-progress {
-  background-color: #28a745;
-}
-
-.status-completed {
-  background-color: #5bc0de;
-}
-
 
 
 /* calendar component */

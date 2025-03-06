@@ -27,10 +27,7 @@ content-type: application/json
     "due_date":"2025-03-15"
 };
 
-                #{title}, 
-                #{status},
-                #{due_month},
-                #{due_date}, 
+
 
 
 
@@ -42,4 +39,38 @@ content-type: application/json
 {
    "id": 3,
     "title": "React 학231231습"
+}
+
+
+###
+
+PUT  http://localhost:18080/api/todo/update/status HTTP/1.1
+content-type: application/json
+
+{
+   "id": 15
+}
+
+
+### 
+
+GET http://localhost:18080/api/todo/scheduled HTTP/1.1
+content-type: application/json
+
+{
+}
+
+###
+
+POST  http://localhost:18080/api/email/send HTTP/1.1
+content-type: application/json
+
+{
+  "host": "smtp.naver.com",
+  "port": 587,
+  "username": "",
+  "password": "",
+  "to": "jwlim1210@naver.com",
+  "subject": "Test Email",
+  "text": ["This is a test email body"]
 }

@@ -16,10 +16,11 @@
                 AND due_month = #{due_month}
             </if>
         </where>
+        ORDER BY status ASC, due_date ASC
     </select>
 
-    <!-- 날짜 기준 전체 삭제 -->
-    <delete id="deleteAllDay" parameterType="com.fdx.todo.common.vo.TodoListSearchParameter">
+    <!-- 삭제 -->
+    <delete id="deleteAllDay" parameterType="com.fdx.todo.common.vo.TodoListParameter">
         DELETE FROM tasks
         <where>
                 AND id = #{id}
@@ -53,12 +54,33 @@
          AND id = #{id}
     </update>
 
+<!-- 상태 변경 -->
+    <update id="updateStatusTodo" parameterType="com.fdx.todo.common.vo.TodoListParameter">
+        UPDATE tasks
+        <set>
+            status = CASE 
+                        WHEN status = 1 THEN 2
+                        WHEN status = 2 THEN 1
+                        ELSE status
+                    END
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
 <!-- 스케줄러 -->
+    <update id="updateStatusToInSuccess">
+        UPDATE tasks
+        SET status = 2
+        WHERE status = 1
+        AND STR_TO_DATE(due_date, '%Y-%m-%d') = CURDATE() - INTERVAL 1 DAY
+    </update>
+
     <update id="updateStatusToInProgress">
         UPDATE tasks
-        SET status = 0
-        WHERE status = 1
-        AND STR_TO_DATE(due_date, '%Y-%m-%d') &gt; CURDATE() 
+        SET status = 1
+        WHERE status = 0
+        AND STR_TO_DATE(due_date, '%Y-%m-%d') = CURDATE() 
     </update>
 
 

@@ -18,7 +18,7 @@ function MainComponents() {
   useEffect(() => {
     // 처음에만 /todo로 리디렉션하기 위해 sessionStorage 사용
     if (!sessionStorage.getItem("hasVisited")) {
-      navigate('/todo', { replace: true });
+      navigate('/calendar', { replace: true });
       sessionStorage.setItem("hasVisited", "true");
     }
   }, [navigate]);

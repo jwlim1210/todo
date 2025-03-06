@@ -21,5 +21,8 @@ public interface TodoListMapper {
     // 업데이트
     void updateTodo(TodoListParameter parameter);
 
+    void updateStatusTodo(TodoListParameter parameter);
+
     int updateStatusToInProgress();
+    int updateStatusToInSuccess();
 }
