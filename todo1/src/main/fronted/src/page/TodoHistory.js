@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { List, Card, Button, DatePicker, Row, Col, Typography, Input, Drawer, message } from 'antd';
+import { List, Card, Button, DatePicker, Row, Col, Typography, Input, Drawer } from 'antd';
 import dayjs from 'dayjs';
 import { SettingOutlined } from "@ant-design/icons";
 import { fetchTodos, sendMail } from '../component/api';
 
 const { Title, Text } = Typography;
 
-function Todo() {
-  const [todoList, setTodoList] = useState([]);
+function TodoHistory() {
+  const [todoList, setTodoList] = useState([]); // 전체 todoList 상태
   const [selectedMonth, setSelectedMonth] = useState(dayjs().format('YYYY-MM')); // 월별로 보기 위한 상태
   const [filteredTodos, setFilteredTodos] = useState([]); // 필터링된 할 일 목록 상태
   const [drawerVisible, setDrawerVisible] = useState(false); // Drawer의 표시 여부
@@ -18,15 +18,15 @@ function Todo() {
   useEffect(() => {
     const getTodos = async (selectedMonth) => {
       try {
-        const todos = await fetchTodos(selectedMonth); // selectedMonth에 맞는 할 일 목록을 가져옴
+        const todos = await fetchTodos(selectedMonth); 
         setTodoList(todos);
-        setFilteredTodos(todos); // 초기에는 모든 할 일 목록을 필터링
+        setFilteredTodos(todos); 
       } catch (error) {
         console.error("할 일 목록을 가져오는 중 오류 발생:", error);
       }
     };
-    getTodos(selectedMonth); // selectedMonth 값을 넘겨서 호출
-  }, [selectedMonth]); // selectedMonth가 변경될 때마다 이 useEffect가 실행되도록 설정
+    getTodos(selectedMonth); 
+  }, [selectedMonth]); 
 
   // 월별로 할 일 정리
   const groupTodosByMonth = (todos) => {
@@ -40,11 +40,14 @@ function Todo() {
     }, {});
   };
 
+  // 월별 그룹화
   const groupedTodos = groupTodosByMonth(filteredTodos);
 
+
+  // 월 별 데이터 세팅
   const handleMonthChange = (date) => {
     if (date) {
-      setSelectedMonth(date.format('YYYY-MM')); // 날짜가 null이 아닐 경우만 처리
+      setSelectedMonth(date.format('YYYY-MM')); 
     }
   };
 
@@ -54,19 +57,22 @@ function Todo() {
     setFilteredTodos(filtered);
   };
 
+  // 전체 리스트  조회 파라메타 전송
   const handleShowAll = () => {
-    setFilteredTodos(todoList); // 모든 할 일 표시
+    setFilteredTodos(todoList);
   };
 
+  // 메일 보내기
   const handleSendMail = async () => {
     const todosList = filteredTodos.map((item) => {
       const statusText = getStatusText(item.status);
       const formattedDate = dayjs(item.due_date).format('YYYY-MM-DD');
       return `${item.title}, ${statusText}, ${formattedDate}`;
     });
-    const response = await sendMail(mailId, mailPassword, todosList);
+    await sendMail(mailId, mailPassword, todosList);
   };
 
+  // 상태 숫자 -> 텍스트 변환
   const getStatusClass = (status) => {
     switch (status) {
       case 0:
@@ -115,7 +121,7 @@ function Todo() {
 
   return (
     <div style={{ padding: '20px' }}>
-      <Title level={2}>Todo Page</Title>
+      <Title level={2}>Todo History</Title>
 
       <Row gutter={16} align="middle" style={{ marginBottom: '20px' }}>
         <Col span={12}>
@@ -242,4 +248,4 @@ function Todo() {
   );
 }
 
-export default Todo;
+export default TodoHistory;

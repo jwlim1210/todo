@@ -20,7 +20,7 @@
     </select>
 
     <!-- 삭제 -->
-    <delete id="deleteAllDay" parameterType="com.fdx.todo.common.vo.TodoListParameter">
+    <delete id="deleteTodo" parameterType="com.fdx.todo.common.vo.TodoListParameter">
         DELETE FROM tasks
         <where>
                 AND id = #{id}

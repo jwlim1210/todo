@@ -40,7 +40,7 @@ function LayoutComponent({ children }) {
         <Sider width={collapsed ? 0 : 200} className="layout-sidebar-left">
           <nav>
             <Link to="/calendar"><h3>📅 Calendar </h3></Link>
-            <Link to="/todo"><h3 style={{ marginTop: "20px" }}> 📝 History </h3></Link>
+            <Link to="/todoHistory"><h3 style={{ marginTop: "20px" }}> 📝 History </h3></Link>
           </nav>
         </Sider>
 

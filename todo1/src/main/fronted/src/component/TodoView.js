@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Input, Button } from 'antd';
+import { List, Input, Button, message } from 'antd';
 import dayjs from 'dayjs';
 
 const TodoView = ({
@@ -18,7 +18,7 @@ const TodoView = ({
 
     // 추가
     const addNewTodo = async () => {
-        if (newTodo === "") { alert("할 일을 입력 해주세요!"); return; }
+        if (newTodo === "") { message.error("할 일을 입력 해주세요!"); return; }
 
         await addTodo(newTodo, selectedDate);
         setNewTodo("");
@@ -27,41 +27,31 @@ const TodoView = ({
 
     // 삭제
     const removeTodo = async () => {
-        if (!selectedTodo) {
-            alert("삭제할 할 일을 선택해주세요!");
-            return;
-        }
         await delTodo(selectedTodo.id);
         await getTodos(selectedDate); // 할 일 삭제 후 리스트 갱신
-        setSelectedTodo(null); // 삭제 후 선택된 할 일 초기화
-        setNewTodo(""); // 삭제 후 인풋 박스 초기화
-
-    };
-
-    // 수정
-    const modifyStatus = async () => {
-        if (!selectedTodo || newTodo === "") {
-            alert("수정할 할 일을 입력해주세요!");
-            return;
-        }
-        await updateStatus(selectedTodo.id);
         setSelectedTodo(null);
         setNewTodo("");
-        await getTodos(selectedDate);  // 할 일 수정 후 리스트 갱신
+    };
+
+    // 상태값 변경 
+    const modifyStatus = async () => {
+        if (!selectedTodo || newTodo === "") { message.error("수정 할 일을 입력 해주세요!"); return; }
+        await updateStatus(selectedTodo.id);
+        await getTodos(selectedDate);
+        setSelectedTodo(null);
+        setNewTodo("");
     };
 
     //수정 
     const modifyTodo = async () => {
-        if (!selectedTodo || newTodo === "") {
-            alert("수정할 할 일을 입력해주세요!");
-            return;
-        }
+        if (!selectedTodo || newTodo === "") { message.error("수정 할 일을 입력 해주세요!"); return; }
         await updateTodo(selectedTodo.id, newTodo);
         setSelectedTodo(null);
         setNewTodo("");
         await getTodos(selectedDate);  // 할 일 수정 후 리스트 갱신
     };
 
+    // 리스트 클릭 이벤트
     const handleClick = (item) => {
         if (item === selectedTodo) {
             setSelectedTodo(null);
@@ -71,6 +61,7 @@ const TodoView = ({
             setNewTodo(item.title);
         }
     };
+
 
     const getStatusClass = (status) => {
         switch (status) {
@@ -118,8 +109,8 @@ const TodoView = ({
                                 <strong
                                     style={{
                                         marginLeft: "10px",
-                                        textDecoration: item.status === 2 ? 'line-through' : 'none',  // 완료 상태일 때 제목에 빗금 추가
-                                        color: item.status === 2 ? '#999' : 'black'  // 완료 상태일 때 텍스트 색상 회색으로 변경
+                                        textDecoration: item.status === 2 ? 'line-through' : 'none',
+                                        color: item.status === 2 ? '#999' : 'black'
                                     }}
                                 >
                                     {item.title}
@@ -134,7 +125,7 @@ const TodoView = ({
                                         fontSize: '14px',
                                     }}
                                 >
-                                    {getStatusText(item.status)} {/* 상태 텍스트 표시 */}
+                                    {getStatusText(item.status)}
                                 </div>
                             </div>
                         </List.Item>
@@ -150,26 +141,28 @@ const TodoView = ({
                         placeholder="새로운 할 일을 입력하세요"
                         value={newTodo}
                         onChange={(e) => setNewTodo(e.target.value)}
-                        onPressEnter={selectedTodo ? modifyTodo : addNewTodo} // 수정 상태에 따라 처리 함수 달리 설정
+                        onPressEnter={selectedTodo ? modifyTodo : addNewTodo}
                         disabled={dayjs().isAfter(dayjs(selectedDate), 'day') && !selectedTodo}
                     />
                     <Button
-                        onClick={modifyStatus}
-                        disabled={(dayjs().isAfter(dayjs(selectedDate), 'day') && !selectedTodo) || !selectedTodo || selectedTodo?.status === 0}
-                    >
-                        상태 변경
-                    </Button>
-                    <Button
                         type="primary"
-                        onClick={selectedTodo ? modifyTodo : addNewTodo} // 수정 상태에 따라 처리 함수 달리 설정
+                        onClick={selectedTodo ? modifyTodo : addNewTodo}
                         disabled={dayjs().isAfter(dayjs(selectedDate), 'day') && !selectedTodo}
                         style={{ backgroundColor: selectedTodo ? '#faad14' : '', borderColor: selectedTodo ? '#faad14' : '' }}
                     >
                         {selectedTodo ? "수정" : "추가"}
                     </Button>
                     <Button
+                        type="primary"
+                        onClick={modifyStatus}
+                        disabled={(dayjs().isAfter(dayjs(selectedDate), 'day') && !selectedTodo) || !selectedTodo || selectedTodo?.status === 0}
+                    >
+                        상태 변경
+                    </Button>
+                    <Button
                         type="primary" danger
                         onClick={removeTodo}  // 삭제 시 removeTodo 함수 사용
+                        disabled={!selectedTodo}
                     >
                         삭제
                     </Button>

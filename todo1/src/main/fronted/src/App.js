@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import LayoutComponent from "./component/LayoutComponent"; // 레이아웃 컴포넌트
-import Todo from './page/Todo'; // Todo 페이지
+import TodoHistory from './page/TodoHistory'; // Todo 페이지
 import Calendar from './page/Calendar'; // Calendar 페이지
 
 function App() {
@@ -27,7 +27,7 @@ function MainComponents() {
     <LayoutComponent>
       <Routes>
         {/* Todo 페이지 */}
-        <Route path="/todo" element={<Todo />} />
+        <Route path="/todoHistory" element={<TodoHistory />} />
         {/* Calendar 페이지 */}
         <Route path="/calendar" element={<Calendar />} />
       </Routes>

@@ -12,8 +12,8 @@ public interface TodoListMapper {
     List<TodoListParameter> getTodoList(String parameter);
 
 
-    // 전체 삭제
-    void deleteAllDay(String parameter);
+    // 캘린더 삭제
+    void deleteTodo(String parameter);
 
     // 캘린더 값 추가
     void insertTodo(TodoListParameter parameter);

@@ -1,6 +1,9 @@
 package com.fdx.todo.controller;
 
 import com.fdx.todo.common.vo.EmailParameter;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import com.fdx.todo.common.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +12,7 @@ import jakarta.mail.MessagingException;
 @RestController
 @RequestMapping("/api/email")
 @CrossOrigin(origins = "http://localhost:3000")
+@Tag(name = "이메일 API", description = "이메일 전송 관련 API")
 public class EmailController {
 
     @Autowired

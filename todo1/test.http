@@ -70,7 +70,7 @@ content-type: application/json
   "port": 587,
   "username": "",
   "password": "",
-  "to": "jwlim1210@naver.com",
+  "to": "",
   "subject": "Test Email",
   "text": ["This is a test email body"]
 }

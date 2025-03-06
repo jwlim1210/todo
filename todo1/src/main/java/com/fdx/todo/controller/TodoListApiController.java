@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fdx.todo.common.services.TodoListService;
 import com.fdx.todo.common.vo.TodoListParameter;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("/api/todo")
 @CrossOrigin(origins = "http://localhost:3000")
+@Tag(name = "TO-DO API", description = "TO-DO 관련 API") 
 public class TodoListApiController {
 
     private final TodoListService _todoListService;
@@ -54,8 +56,8 @@ public class TodoListApiController {
     }
 
     @DeleteMapping("/date/del")
-    public void deleteAllDay(@RequestParam String parameter) {
-        _todoListService.deleteAllDay(parameter);
+    public void deleteTodo(@RequestParam String parameter) {
+        _todoListService.deleteTodo(parameter);
     }
 
     @GetMapping("/scheduled")

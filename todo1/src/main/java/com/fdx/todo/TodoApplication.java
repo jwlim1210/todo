@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-// @ComponentScan(basePackages = "com.fdx.todo.common.scheduled") 
 @MapperScan(basePackages = "com.fdx.todo.mapper")
 public class TodoApplication {
 

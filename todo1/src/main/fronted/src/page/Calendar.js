@@ -67,14 +67,14 @@ function Calendar() {
                 <TodoView
                     todos={filteredTodos}
                     selectedTodo={selectedTodo}
-                    setSelectedTodo={setSelectedTodo} // 선택된 할 일을 설정하는 함수 전달
+                    setSelectedTodo={setSelectedTodo}
                     addTodo={addTodo}
                     delTodo={deleteTodo}
                     updateTodo={updateTodo}
                     selectedDate={selectedDate}
-                    setNewTodo={setNewTodo} // 새로운 할 일 텍스트를 업데이트할 함수 전달
-                    newTodo={newTodo} // 새로운 할 일 텍스트 상태 전달
-                    getTodos={getTodos} // getTodos 함수를 전달
+                    setNewTodo={setNewTodo} 
+                    newTodo={newTodo} 
+                    getTodos={getTodos} 
                     updateStatus={updateStatus}
                 />
             </div>
