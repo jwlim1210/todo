@@ -30,7 +30,8 @@
 ***백엔드***
 1. mySQL 서버 실행
 2. 스프링 부트 todo1 실행*
-3. 프로젝트의 schema.sql의 테이블 실행 
+3. application.properties의 sql 세팅 갑 변경
+4. 프로젝트의 schema.sql, data.sql의 테이블 실행 
 
 ## 3. 주력으로 사용한 컴포넌트 및 라이브러리에 대한 설명 및 사용 이유 기입
 ***프론트엔드***
