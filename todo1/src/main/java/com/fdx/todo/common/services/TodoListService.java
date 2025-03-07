@@ -51,8 +51,9 @@ public class TodoListService {
         _todoListMapper.updateStatusTodo(parameter);
     }
 
-    // 매일 자정 실행 (테스트용으로 10분마다 실행)
-    @Scheduled(cron = "0 */10 * * * *")
+    // 매일 오전 9시에 실행 (테스트용으로 10분마다 실행)
+    // @Scheduled(cron = "0 */10 * * * *")
+    @Scheduled(cron = "0 0 9 * * *")
     public void updateStatus() {
         int updatedCountToInProgress = _todoListMapper.updateStatusToInProgress();
         int updateCountToInSuccess = _todoListMapper.updateStatusToInSuccess();
