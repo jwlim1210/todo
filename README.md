@@ -28,9 +28,9 @@
 3. 프로젝트 실행(윈도우 프롬프트 창) : npm start
 
 ***백엔드***
-1. mySQL 서버 실행
+1. mySQL 서버 실행 및 todo DATABASE 생성 및
 2. 스프링 부트 todo1 실행*
-3. application.properties의 sql 세팅 갑 변경
+3. application.properties의 sql 세팅 값 변경
 4. 프로젝트의 schema.sql, data.sql의 테이블 실행 
 
 ## 3. 주력으로 사용한 컴포넌트 및 라이브러리에 대한 설명 및 사용 이유 기입
