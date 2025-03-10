@@ -72,14 +72,14 @@
     <update id="updateStatusToInSuccess">
         UPDATE tasks
         SET status = 2
-        WHERE status = 1
-        AND STR_TO_DATE(due_date, '%Y-%m-%d') = CURDATE() - INTERVAL 1 DAY
+            WHERE (status = 1 OR status = 0)
+        AND STR_TO_DATE(due_date, '%Y-%m-%d') &lt; CURDATE() 
     </update>
 
     <update id="updateStatusToInProgress">
         UPDATE tasks
         SET status = 1
-        WHERE status = 0
+            WHERE status = 0
         AND STR_TO_DATE(due_date, '%Y-%m-%d') = CURDATE() 
     </update>
 
